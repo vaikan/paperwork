@@ -1,5 +1,5 @@
 language: php
-
+sudo: false
 php:
   - 5.4
   - 5.5
@@ -11,9 +11,9 @@ before_script:
 
 script:
   - cd frontend
-  - npm install 
+  - npm install
+  - bower install
   - gulp
   - cd ..
   - mkdir -p build/logs
   - (cd "$(pwd)/frontend/"; phpunit)
-  
