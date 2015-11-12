@@ -10,8 +10,8 @@
 		"thiagoalessio/tesseract_ocr": ">= 0.2.0",
 		"simplesoftwareio/simple-qrcode": "1.1.*",
 		"barryvdh/laravel-ide-helper": "~1.11",
-		"adldap/adldap": "4.0.*",
-		"webpatser/laravel-uuid": "1.*"
+		"webpatser/laravel-uuid": "1.*",
+		"strebl/adldap": "^4.0"
 	},
 	"autoload": {
 		"classmap": [
@@ -32,6 +32,7 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
+            "php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [
@@ -41,5 +42,8 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "stable",
+	"require-dev": {
+		"doctrine/dbal": "^2.5"
+	}
 }

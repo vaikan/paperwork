@@ -1,7 +1,7 @@
 angular.module('paperworkNotes').controller('NotesListController',
-  function($scope, $rootScope, $location, $routeParams, NotesService) {
+  function($scope, $rootScope, $location, $routeParams, NotesService, paperworkDbAllId) {
     $rootScope.noteSelectedId = {};
-    $rootScope.notesSelectedIds = [];
+    $rootScope.notesSelectedIds = {};
     NotesService.getNotesInNotebook(paperworkDbAllId);
 
     $scope.noteSelect = function($notebookId, $noteId) {
@@ -17,5 +17,8 @@ angular.module('paperworkNotes').controller('NotesListController',
       }
       return path;
     };
-
+      //$scope.noteSelectedId=$rootScope.noteSelectedId;
+      $scope.openSelectedNote = function(){
+	  $location.path("/n/" + ($rootScope.notebookSelectedId)+"/"+($rootScope.noteSelectedId.noteId));
+      };
   });

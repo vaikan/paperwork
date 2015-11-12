@@ -12,19 +12,16 @@
   <body class="paperwork-error">
 
     <div class="container">
-      <div class="error-logo">
-        <img class="error-logo-img" src="/images/404-logo.png">
-      </div>
-      @yield("content")
-    </div> <!-- /container -->
-
-    <div class="footer [[ Config::get('paperwork.showIssueReportingLink') ? '' : 'hide' ]]">
-      <div class="container">
-        <div class="alert alert-warning" role="alert">
-          <p>[[Lang::get('messages.found_bug')]]</p>
+      <div class="error-wrapper">
+        <div class="error-logo">
+          <img class="error-logo-img" src="[[ asset('images/404-logo.png') ]]">
+        </div>
+        @yield("content")
+        <div class="footer [[ Config::get('paperwork.showIssueReportingLink') ? '' : 'hide' ]]">
+          @include('partials/error-reporting-footer')
         </div>
       </div>
-    </div>
+    </div> <!-- /container -->
 
   [[ HTML::script('js/jquery.min.js') ]]
 

@@ -1,5 +1,11 @@
 @import "../../retina.less";
 
+@media screen and (max-width: @screen-xs-max) {
+  h1 {
+    margin-top: 0;
+  }
+}
+
 .paperwork-logo {
   padding: 9px 6px;
   margin-left: 0px !important;
@@ -27,6 +33,7 @@ html {
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+  padding-right: 0px !important;
 }
 
 /*
@@ -57,16 +64,21 @@ label {
   padding: 0px 0px 8px 0px;
 }
 
+.container-scrollable.error {
+    color: #424242;
+    border-color: @brand-danger;
+}
+
 .note-tags-bar {
   margin: 16px 0px 10px 0px;
 }
 
 .label-tag {
-  padding: 4px 8px;
+  padding: 5px 9px;
   margin: 3px 6px 3px 0px;
-  font-size: 0.9em;
+  font-size: 1em;
   line-height: 1em;
-  font-weight: 100;
+  font-weight: 300;
   cursor: pointer;
 
   i.fa {
@@ -176,8 +188,31 @@ label {
   position: fixed;
   bottom: 0px;
   left: 8px;
-  width: 220px !important;
+  width: 15%;
+  min-width: 220px;
   z-index: 9999;
+  cursor: pointer;
+
+  @media screen and (max-width: @screen-xs-max) {
+    position: static;
+    width: auto;
+    display: block;
+
+    .make-row();
+
+    &:after {
+      content: '';
+      display: block;
+
+      width: 100%;
+      clear: both;
+    }
+
+    > .error-reporting {
+      .make-xs-column(12);
+    }
+
+  }
 }
 
 .fa {
@@ -258,6 +293,17 @@ label {
   .navbar.navbar-inverse{
     display: none;
   }
+  .navbar.navbar-inverse.navbar-edit{
+    display: block;
+    margin:0;
+  }
+  .navbar-nav.navbar-edit{
+    float:left;
+    margin:0;
+  }
+  .navbar-nav.navbar-right.navbar-edit{
+    float:right;
+  }
 }
 
 //Move note toolbar to next line when width is too small
@@ -296,7 +342,7 @@ label {
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 67px;
+    top: 62px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -307,10 +353,20 @@ label {
     background-color: @white;
     border-right: 1px solid @gray;
   }
-  .sidebar-collapse-switch{
+  .sidebar-collapse-switch {
+    left: -35px;
+    padding: 5px;
+    margin-top: 10px;
+    z-index: 1001;
     display: block;
     cursor: pointer;
     position: fixed;
+  }
+  .sidebar-collapse-switch-closed {
+      left: 10px;
+  }
+  .sidebar-collapsed-notes-list {
+      margin-left: 16px !important;
   }
 }
 
@@ -350,18 +406,27 @@ ul.nav-tabs-margin {
 .main {
   padding: 20px;
 }
-@media (min-width: 768px) {
+
+/*@media (min-width: 768px) {
   .main {
     padding-right: 40px;
     padding-left: 40px;
   }
-}
+}*/
+
 .main .page-header {
   margin-top: 0;
 }
 .main .page-content {
   font-size: @font-size-large;
   line-height: 1.7;
+  
+  img {
+      max-width:100%;
+      max-height: 100%;
+      height: auto;
+  }
+  
 }
 
 
@@ -412,6 +477,8 @@ ul.nav-tabs-margin {
         line-height: 88px;
         padding: 0px;
         text-align: center;
+        padding-left: 20px;
+        z-index: 1;
       }
 
       .notes-list-title {
@@ -435,6 +502,8 @@ ul.nav-tabs-margin {
 
         margin-right: 8px;
         border-right: 1px solid @gray-light;
+
+        height:56px;
 
         .notes-list-date-day {
           display: block;
@@ -461,6 +530,17 @@ ul.nav-tabs-margin {
         overflow: hidden;
         color: @text-color;
       }
+      
+      .draggable {
+          cursor: grab;
+          cursor: -moz-grab;
+          cursor: -webkit-grab;
+          height: 100%;
+          position: absolute;
+          width: 15px;
+          z-index: 1;
+          background-color: @brand-primary;
+      }
 
       .notes-list-title-gradient {
         // Removed due to browser issues (e.g. Firefox)
@@ -485,6 +565,12 @@ ul.nav-tabs-margin {
         // -webkit-background-clip: text;
         // -webkit-text-fill-color: transparent;
       }
+  }
+  
+  .notes-list-item.dragging {
+      cursor: grabbing;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
   }
 
   .notes-list-item.active {
@@ -543,6 +629,12 @@ ul.nav-tabs-margin {
   // color: @navbar-default-color;
 }
 
+@media (min-width: 768px) {
+    .navbar-search {
+        width: 120% !important;
+    }
+}
+
 // Tree List
 #sidebarNotebooks {
   background-color: @white;
@@ -557,8 +649,11 @@ ul.nav-tabs-margin {
 }
 
 #sidebarCalendar {
+
+  overflow-x: auto;
+
   table {
-    width: 100%;
+    width: 99%;
     border-collapse: collapse;
 
     td {
@@ -649,11 +744,22 @@ ul.nav-tabs-margin {
       }
       li.tree-tag {
         cursor: pointer;
-
+	
+	span.tag-parent{
+	    float:left;
+	    width:auto;
+	}
         span.active {
           color: @brand-primary;
         }
+        div.active, [ng-drop].drag-enter {
+          color: @brand-primary;
+        }
       }
+    }
+    
+    ul.tree-children {
+        padding: 10px 10px 10px 0;
     }
 
     ul {
@@ -702,6 +808,7 @@ ul.nav-tabs-margin {
     }
 
     span.tree-header {
+      cursor:pointer;
       display: block;
       padding: 10px;
       margin: 0px 0px 6px 0px;
@@ -827,10 +934,16 @@ body.paperwork-error {
   padding-bottom: 40px;
   background-color: @white;
 
+  .error-wrapper {
+    width: 55em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .error-logo {
     display: inline-block;
     vertical-align: middle;
-    
+
     .error-logo-img {
       display: block;
       margin-left: auto;
@@ -838,21 +951,29 @@ body.paperwork-error {
       width: 220px;
       height: 220px;
     }
-    
+
   }
-  
+
   .error-content {
       display: inline-block;
       vertical-align: middle;
   }
-  
-  @media (max-width: 485px) {
+
+  .error-reporting {
+      margin-top: 1em;
+  }
+
+  @media (max-width: 500px) {
     .error-logo {
         display: block;
     }
-    
+
     .error-content {
-        margin-bottom:15px;
+        margin-bottom: 15px;
+    }
+
+    .error-wrapper {
+        width: auto;
     }
   }
 }
@@ -970,6 +1091,17 @@ body.paperwork-error {
 }
 // End of Modal: Message
 
+// Modal : users Select
+.user-row {
+    margin-left:15px;
+    margin-right:15px;
+    margin-top:5px;
+    .perm-select {
+	float:right;
+    }
+}
+
+
 // Modal: Manage tags
 .modal-manage-list {
   .manage-list-content {
@@ -986,6 +1118,9 @@ body.paperwork-error {
       }
 
       .btn-danger {
+        margin-top: 4px;
+      }
+      .btn-info {
         margin-top: 4px;
       }
     }
@@ -1032,3 +1167,157 @@ body.paperwork-error {
   }
 }
 // End of Modal: Manage tags
+
+/*
+    Status Feedback classes
+*/
+// Common class for notification
+[pw-status-notification] {
+  .request_status_feedback {
+    cursor: pointer;
+    color: #FFFFFF;
+    padding: 10px 0;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    top: 0px;
+    z-index: 9999;
+    display: none;
+
+    // Error notification
+    &.error {
+      background-color: fade(@brand-danger, 65%);
+    }
+
+    // Success notification
+    &.success {
+      background-color: fade(@brand-success, 65%);
+    }
+  }
+}
+
+.navbar-right {
+
+}
+
+/*
+    Setup Wizard CSS 
+*/
+html.setup_wizard {
+    height: 100%;
+    margin-top: -1px;
+    
+    body {
+        margin-top: -1px;
+        position: relative;
+        height: 100%;
+    }
+    
+    ul.form {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        min-height: 500px;
+    }
+    
+    ul.form li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        /* position: absolute; */
+    }
+    
+    .next_step {
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        left: 5%;
+        width: 100%;
+    }
+    
+    .wizard {
+        left: 0;
+        right: 0;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+        
+        .container-fluid {
+            display: table;
+            width: 100%;
+            height: 100%;
+            
+            .first {
+                z-index: 111111111;
+                display: table-cell;
+                vertical-align: middle;
+                padding : 0;
+            }
+        }
+    }
+    
+    #progress_bar {
+        width: 0;
+        background-color: @brand-primary;
+        height: 10px;
+    }
+    
+    .inner.cover {
+        padding: 20px 60px;
+    }
+    
+    .center-div {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+    
+    #update_button {
+        left: 5% !important;
+        right: 5% !important;
+        width: 100%;
+        bottom: 25%;
+    }
+    
+    .dbms_choice {
+        width: 48%;
+        height: 100%;
+        float: left;
+        margin-right: 10px;
+    }
+    
+    .database_links {
+        display: block;
+        padding: 20px 0;
+    }
+    
+    .database_links:not(.active) {
+        font-style: italic;
+        background-color: #CCCCCC;
+    }
+    
+    .dbms_details_form {
+        width: 50%;
+        height: 100%;
+        float: left;
+    }
+    
+    #connection_id_success {
+        padding: 5px;
+        background-color: @brand-success;
+    }
+    
+    #connection_id_failure {
+        padding: 5px;
+        background-color: @brand-danger;
+    }
+    
+    #change_config {
+        float: right;
+    }
+    
+    #error_div {
+        color: red;
+    }
+}

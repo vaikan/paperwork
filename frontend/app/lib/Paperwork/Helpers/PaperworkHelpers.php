@@ -2,9 +2,68 @@
 
 namespace Paperwork\Helpers;
 
+use Config;
+use DOMDocument;
 use Illuminate\Config\Repository;
+use Carbon\Carbon;
 
 class PaperworkHelpers {
+
+	/**
+     * Clears html on note save
+     * @param $html
+     *
+     * @return bool|mixed|string
+     */
+	public static function purgeHtml($html)
+	{
+		if (!trim($html)) {
+			return '';
+		}
+
+		$html = mb_convert_encoding($html, 'UTF-8', mb_detect_encoding($html));
+		$html = mb_convert_encoding($html, 'html-entities', 'utf-8');
+
+		$dom                     = new DOMDocument('1.0', 'UTF-8');
+		$dom->substituteEntities = true;
+
+		// Suppress warnings about malformed html.
+		$previous_value = libxml_use_internal_errors(true);
+
+		$dom->loadHTML($html);
+
+		libxml_clear_errors();
+		libxml_use_internal_errors($previous_value);
+
+		// @formatter:off
+		$tags_to_remove = Config::get('paperwork.purgeTagList', ['script']);
+		// @formatter:on
+
+		$remove = [];
+
+		foreach ($tags_to_remove as $removal_target) {
+			$sentenced = $dom->getElementsByTagName($removal_target);
+
+			foreach ($sentenced as $item) {
+				$remove[] = $item;
+			}
+		}
+
+		foreach ($remove as $sentenced_item) {
+			$sentenced_item->parentNode->removeChild($sentenced_item);
+		}
+
+		// Convert dom object back to html.
+		$html = '';
+
+		$body_node = $dom->getElementsByTagName('body')->item(0);
+
+		foreach ($body_node->childNodes as $child) {
+			$html .= $dom->saveXML($child);
+		}
+
+		return $html;
+	}
 
 	public function apiResponse($status, $data)	{
 		$return = array();
@@ -120,6 +179,87 @@ class PaperworkHelpers {
     {
         return strpos(\Config::get('auth.driver'),'ldap') !== false;
     }
-}
 
-?>
+    /**
+     * Get last commit hash and latest github hash.
+     *
+     * @return mixed
+     */
+    public function getHashes(){
+        $cachedInfo = !\Cache::get('paperwork.commitInfo', [null, false]);
+
+        if (!$cachedInfo[0] && !$cachedInfo[1]) {
+            $resolver = strtolower(substr(PHP_OS, 0, 3)) == 'win' ? 'where.exe' : 'command -v';
+            $gitOutput = "";
+            exec("$resolver git", $gitOutput);
+
+            if (!empty($gitOutput) && (function_exists('curl_init') !== false)) {
+                $branch = exec("git symbolic-ref --short HEAD");
+
+                $ch = curl_init("https://api.github.com/repos/twostairs/paperwork/git/refs/heads/$branch");
+
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+                curl_setopt($ch, CURLOPT_USERAGENT, "Colorado");
+
+                $content = curl_exec($ch);
+                
+                /* Check if user is in a branch not found in Paperwork's source code */
+                $info = curl_getinfo($ch);
+                if($info["http_code"] != 200) {
+                    return [0, 0, 0, 0];
+                }
+
+                $jsonFromApi   = array();
+                $jsonFromApi[] = json_decode($content);
+                $jsonResult    = $jsonFromApi[0];
+
+                if (isset($jsonResult->object->sha)) {
+                    $upstreamHeadSha1 = str_replace('"', '', $jsonResult->object->sha);
+                    $commit_url = isset($jsonResult->object->url) ? $jsonResult->object->url : "";
+                } else {
+                    $upstreamHeadSha1 = "";
+                    $commit_url = "";
+                }
+
+                // Retrieve last commit on install.
+                preg_match('/^.*\n/', shell_exec('git log'), $matches);
+
+                $localLatestSha1 = '';
+
+                if (!empty($matches[0]) && stripos($matches[0], 'commit') !== false) {
+                    $matchSeparated = explode(' ', $matches[0]);
+
+                    $localLatestSha1 = trim(end($matchSeparated));
+                }
+                
+                $localTimestamp = "";
+                $upstreamTimestamp = ""; 
+                
+                // If user is not running latest official source code, check if last commit installed is earlier than last on git 
+                if($localLatestSha1 !== $upstreamHeadSha1){
+                    $localTimestamp = exec("git show -s --format=%ci $localLatestSha1");
+                    curl_setopt($ch, CURLOPT_URL, $commit_url);
+                    $contentTimestamp = curl_exec($ch);
+                    $jsonFromApiTimestamp = [];
+                    $jsonFromApiTimestamp[] = json_decode($contentTimestamp);
+                    $jsonResultTimestamp = $jsonFromApiTimestamp[0];
+                    $upstreamTimestamp = isset($jsonResultTimestamp->committer->date) ? $jsonResultTimestamp->committer->date : 0;
+                }
+
+                // Check for update daily(UTC).
+                $now = Carbon::now();
+
+                $tomorrow = Carbon::parse('tomorrow');
+
+                \Cache::put(
+                    'paperwork.commitInfo',
+                    [$localLatestSha1, $upstreamHeadSha1, $localTimestamp, $upstreamTimestamp],
+                    $now->diffInMinutes($tomorrow));
+            }
+
+        }
+
+        return \Cache::get('paperwork.commitInfo', [null, false, false, false]);
+    }
+}

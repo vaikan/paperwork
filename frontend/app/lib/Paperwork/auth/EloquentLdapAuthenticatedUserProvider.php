@@ -11,13 +11,21 @@ class EloquentLdapAuthenticatedUserProvider extends EloquentUserProvider
     
     private $config;
     
-    private $adLdap;
+    private $adLdap = NULL;
     
     public function __construct(HasherInterface $hasher, $model,  $config)
     {
         parent::__construct($hasher,$model);
         $this->config = $config;
+    }
+
+    public function getAdLdap() {
+        // create adLDAP on demand because it makes a bind request in the constructor
+        if ($this->adLdap) {
+            return $this->adLdap;
+        }
         $this->adLdap = new adLDAP($this->config);
+        return $this->adLdap;
     }
 
     /**
@@ -29,23 +37,34 @@ class EloquentLdapAuthenticatedUserProvider extends EloquentUserProvider
     public function retrieveByCredentials(array $credentials)
     {
         $username = $credentials['username'];
-        if ($this->adLdap->authenticate($username, $credentials['password'])){
-            $user = $this->createModel()->query()->where('username',$username)->first();
-            if ($user == null && $this->config['autoRegister']){
-                $ldapInfo = $this->adLdap->user()->info($username,array("givenname","sn"))[0];
-                $userInfo = array();
-                $userInfo['firstname'] = isset($ldapInfo['givenname']) ? $ldapInfo['givenname'][0] : $username;
-                $userInfo['lastname'] = isset($ldapInfo['sn']) ? $ldapInfo['sn'][0] : '';
-                $userInfo['username'] = $username;
-                $userInfo['password'] = 'ldapAuth';
-                return App::make('UserRegistrator')->registerUser($userInfo,$this->config['registrationLanguage']);
-            } elseif (isset($credentials['isRegister'])) {
-                //if we're not auto registering, we need to let Guard know that we are valid authentication, so
-                //we will return this dummy object here
-                return new GenericUser(array("id"=>$username));
+        $user = $this->createModel()->query()->where('username',$username)->first();
+        if ($user == null && ($this->config['autoRegister'] || isset($credentials['isRegister']) )){
+            //if our user wasn't found, and we have auto register enabled or we're coming from the user registration
+            //directly, then we'll attempt an authentication and take the appropriate action.
+            $ldap_info = $this->getAdLdap()->user()->info($username);
+            if($ldap_info['count'] != 1)
+                return null;
+
+            if ($this->getAdLdap()->authenticate($ldap_info[0]['dn'], $credentials['password'])){
+                if ($this->config['autoRegister']){
+                    //if we have auto register enabled, create a user and such using the ldap info.
+                    $ldapInfo = $this->getAdLdap()->user()->info($username,array("givenname","sn"))[0];
+                    $userInfo = array();
+                    $userInfo['firstname'] = isset($ldapInfo['givenname']) ? $ldapInfo['givenname'][0] : $username;
+                    $userInfo['lastname'] = isset($ldapInfo['sn']) ? $ldapInfo['sn'][0] : '';
+                    $userInfo['username'] = $username;
+                    $userInfo['password'] = 'ldapAuth';
+                    $user = App::make('UserRegistrator')->registerUser($userInfo,$this->config['registrationLanguage']);
+                } elseif (isset($credentials['isRegister'])) {
+                    //if we're not auto registering, but this is the registration process,
+                    //we need to return a valid UserInterface object so that Guard will
+                    //pass the authentication and actually continue with the registration process.
+                    //This is necessary because we don't allow users that can't authenticate to ldap to register
+                    $user = new GenericUser(array("id"=>$username));
+                }
             }
         }
-        return null;
+        return $user;
     }
 
     /**
@@ -57,6 +76,9 @@ class EloquentLdapAuthenticatedUserProvider extends EloquentUserProvider
      */
     public function validateCredentials(UserInterface $user, array $credentials)
     {
-        return $this->adLdap->authenticate($credentials['username'], $credentials['password']);
+        $ldap_info = $this->getAdLdap()->user()->info($credentials['username']);
+        if($ldap_info['count'] != 1)
+            return false;
+        return $this->getAdLdap()->authenticate($ldap_info[0]['dn'], $credentials['password']);
     }
 } 
