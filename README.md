@@ -12,7 +12,7 @@ Paperwork is an open-source, self-hosted alternative to services like Evernote �
 
 This branch contains the second iteration of Paperwork, which is a complete rewrite. Not only is it based on another framework - it is based on a completely different technology stack. **It is in its very early development phase and not yet usable**.
 
-If you were looking for the Laravel-based version 1 of Paperwork, please check [out this branch](https://github.com/paperwork/paperwork/tree/1).
+*If you were looking for the Laravel-based version 1 of Paperwork, please check [out this branch](https://github.com/paperwork/paperwork/tree/1).*
 
 #### Background
 
@@ -23,6 +23,8 @@ If you're interested in it, [find it here 🤷🏻‍♂️](https://github.com/
 Feel free to check out this branch and get involved with what's there already to get an idea of where Paperwork is heading. Also check out the [project board](https://github.com/paperwork/paperwork/projects/1) to see what needs to be done or suggest what and how should be done.
 
 Feel free to actively participate in the [chatroom](https://riot.im/app/#/room/#paperwork:matrix.org).
+
+**Info: 99% of the action happens [inside the other repositories](https://github.com/paperwork)! This repository only contains of the one-click-deployment of Paperwork!**
 
 ### Usage
 
