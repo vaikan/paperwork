@@ -57,7 +57,7 @@ services:
   service_gatekeeper:
     image: paperwork/service-gatekeeper:latest
     environment:
-      CONFIG: '{"port":8080,"jwt_secret":"ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY","services":[{"name":"users","target":"http://service_users:8080","endpoints":["/users","/registration","/login"]},{"name":"notes","target":"http://service_notes:8080","endpoints":["/notes"]}]}'
+      CONFIG_JSON: '{"port":8080,"jwt_secret":"ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY","services":[{"name":"users","target":"http://service_users:8080","endpoints":["/users","/registration","/login"]},{"name":"notes","target":"http://service_notes:8080","endpoints":["/notes"]}]}'
     networks:
       - papernet
     ports:
