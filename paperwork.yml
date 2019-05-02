@@ -57,9 +57,7 @@ services:
   service_gatekeeper:
     image: paperwork/service-gatekeeper:latest
     environment:
-      PORT: 8080
-      JWT_SECRET: "ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY"
-      SERVICE_USERS: http://service_users:8080
+      CONFIG: '{"port":8080,"jwt_secret":"ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY","services":[{"name":"users","target":"http://service_users:8080","endpoints":["/users","/registration","/login"]},{"name":"notes","target":"http://service_notes:8080","endpoints":["/notes"]}]}'
     networks:
       - papernet
     ports:
@@ -78,6 +76,31 @@ services:
         window: 60s
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Configs Service                                                            ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  service_configs:
+    image: paperwork/service-configs:latest
+    environment:
+      PORT: 8080
+      MONGODB_URL: mongodb://db:27017/configs
+      INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
+      INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
+      INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+    networks:
+      - papernet
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Users Service                                                              ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
   service_users:
@@ -86,10 +109,61 @@ services:
       PORT: 8080
       JWT_SECRET: "ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY"
       MONGODB_URL: mongodb://db:27017/users
+      INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
+      INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
+      INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
     networks:
       - papernet
     depends_on:
       - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Notes Service                                                              ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  service_notes:
+    image: paperwork/service-notes:latest
+    environment:
+      PORT: 8080
+      MONGODB_URL: mongodb://db:27017/notes
+      INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
+      INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
+      INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+    networks:
+      - papernet
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Web UI                                                                     ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  web:
+    image: paperwork/web:latest
+    environment:
+      PORT: 8080
+      PAPERWORK_API_GATEWAY_PROTOCOL: http
+      PAPERWORK_API_GATEWAY_HOST_PORT: service_gatekeeper:8080
+    networks:
+      - papernet
+    depends_on:
+      - service_gatekeeper
     deploy:
       replicas: 1
       update_config:
