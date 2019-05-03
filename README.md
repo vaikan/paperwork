@@ -66,4 +66,4 @@ For more info, check the official Docker documentation [for Mac](https://docs.do
 
 ## Developing / Contributing
 
-Please refer to [the individual services' repositories](https://github.com/paperworkco) in order to get more information on how to contribute.
+Please refer to [the individual services' repositories](https://github.com/paperwork) in order to get more information on how to contribute.
