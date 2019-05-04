@@ -63,3 +63,25 @@ For more info, check the official Docker documentation [for Mac](https://docs.do
 ## Developing / Contributing
 
 Please refer to [the individual services' repositories](https://github.com/paperwork) in order to get more information on how to contribute.
+
+### Repositories
+
+Here are the main repositories of Paperwork v2:
+
+- [`paperwork`](https://github.com/paperwork/paperwork): This repository, containing the one-click-deployment and overall documentation
+- [`paperwork.ex`](https://github.com/paperwork/paperwork.ex): Elixir SDK for building Paperwork services
+- [`service-configs`](https://github.com/paperwork/service-configs): Configurations service that stores instance configs and provides them through an internal endpoint to other services
+- [`service-users`](https://github.com/paperwork/service-users): Users service that stores user information and provides endpoints for users to register, login and update their information
+- [`service-notes`](https://github.com/paperwork/service-notes): Notes service that stores all the user's notes
+- [`web`](https://github.com/paperwork/web): Angular-based web front-end for Paperwork
+
+### Tasks/Issues
+
+As for now, all tasks/issues are being [collected inside this repository](https://github.com/paperwork/paperwork/issues), just to keep it simple. On a long term, tasks/issues will be transferred into the related service's repository, in order to be able to reference them through git commits.
+
+## Links
+
+- [Browse](https://paperwork.cloud)
+- [Chat](https://riot.im/app/#/room/#paperwork:matrix.org)
+- [Tweet](https://twitter.com/paperworkcloud)
+- [Mail](mailto:highfive@paperwork.cloud)
