@@ -20,7 +20,7 @@ Also, you can join the [official chatroom](https://riot.im/app/#/room/#paperwork
 
 ## Usage
 
-This repository is structuring and unifying all required components for Paperwork.
+This repository is structuring and unifying all required components for Paperwork. It its purpose is to provide an **example of how you *could* host Paperwork yourself**. However, please keep in mind that the stack file used in this repostiory should **not be used for real-world, internet-facing deployments**, as it lacks the ability to manage credentials between services in a secure manner.
 
 ```bash
 $ git clone git@github.com:paperwork/paperwork.git
