@@ -2,3 +2,5 @@
 *.sublime-workspace
 volumes/mongodb/*
 !volumes/mongodb/.gitkeep
+volumes/minio/*
+!volumes/minio/.gitkeep
