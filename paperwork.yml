@@ -52,12 +52,40 @@ services:
         window: 360s
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ File storage                                                               ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  storage:
+    image: minio:latest
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: root
+      MINIO_SECRET_KEY: roooooot
+    volumes:
+      - type: bind
+        source: ./volumes/minio
+        target: /data/db
+    networks:
+      - papernet
+    ports:
+      - target: 9000
+        published: 8080
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 360s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Gatekeeper Service                                                         ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
   service_gatekeeper:
     image: paperwork/service-gatekeeper:latest
     environment:
-      CONFIG_JSON: '{"port":8080,"jwt_secret":"ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY","services":[{"name":"users","target":"http://service_users:8080","endpoints":["/users","/registration","/login"]},{"name":"notes","target":"http://service_notes:8080","endpoints":["/notes"]}]}'
+      CONFIG_JSON: '{"port":8080,"jwt_secret":"ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY","services":[{"name":"users","target":"http://service_users:8080","endpoints":["/users","/registration","/login"]},{"name":"notes","target":"http://service_notes:8080","endpoints":["/notes"]},{"name":"storages","target":"http://service_storages:8080","endpoints":["/attachments"]}]}'
     networks:
       - papernet
     ports:
@@ -86,6 +114,7 @@ services:
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+      INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
     networks:
       - papernet
     depends_on:
@@ -112,6 +141,7 @@ services:
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+      INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
     networks:
       - papernet
     depends_on:
@@ -137,10 +167,41 @@ services:
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+      INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
     networks:
       - papernet
     depends_on:
       - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Storages Service                                                           ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  service_storages:
+    image: paperwork/service-storages:latest
+    environment:
+      PORT: 8080
+      MONGODB_URL: mongodb://db:27017/storages
+      STORAGE_URL: http://storage:8080
+      AWS_ACCESS_KEY_ID: root
+      AWS_SECRET_ACCESS_KEY: roooooot
+      INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
+      INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
+      INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+      INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
+    networks:
+      - papernet
+    depends_on:
+      - db
+      - storage
     deploy:
       replicas: 1
       update_config:
