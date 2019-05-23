@@ -72,7 +72,8 @@ Here are the main repositories of Paperwork v2:
 - [`paperwork.ex`](https://github.com/paperwork/paperwork.ex): Elixir SDK for building Paperwork services
 - [`service-configs`](https://github.com/paperwork/service-configs): Configurations service that stores instance configs and provides them through an internal endpoint to other services
 - [`service-users`](https://github.com/paperwork/service-users): Users service that stores user information and provides endpoints for users to register, login and update their information
-- [`service-notes`](https://github.com/paperwork/service-notes): Notes service that stores all the user's notes
+- [`service-notes`](https://github.com/paperwork/service-notes): Notes service that stores all user's notes
+- [`service-storages`](https://github.com/paperwork/service-storages): Storages service that stores all user's attachments
 - [`web`](https://github.com/paperwork/web): Angular-based web front-end for Paperwork
 
 ### Tasks/Issues
