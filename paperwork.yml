@@ -244,9 +244,10 @@ services:
   web:
     image: paperwork/web:latest
     environment:
-      PORT: 8080
+      NGINX_HOST: www.paperwork.local
+      NGINX_PORT: 80
       PAPERWORK_API_GATEWAY_PROTOCOL: http
-      PAPERWORK_API_GATEWAY_HOST_PORT: service_gatekeeper:8080
+      PAPERWORK_API_GATEWAY_HOST_PORT: api.paperwork.local
     networks:
       - papernet
     depends_on:
