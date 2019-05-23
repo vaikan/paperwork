@@ -42,13 +42,19 @@ $ make deploy
 
 The Makefile then takes care of initializing Swarm, in case you haven't done that already, creating the encrypted network (`papernet`) and deploying the Paperwork stack on top of it.
 
+**Note:** This Docker stack is configured to use `www.paperwork.local` (for the [web UI](https://github.com/paperwork/web)) and `api.paperwork.local` (for the API services). Hence you will need to add these to the `127.0.0.1` entry in your `/etc/hosts` file:
+
+```
+127.0.0.1   localhost paperwork.local api.paperwork.local www.paperwork.local
+```
+
 In order to stop/remove the whole stack, simply use the `undeploy` target:
 
 ```bash
 $ make undeploy
 ```
 
-Note: This won't make your Docker host leave Swarm again, in case it wasn't running in Swarm mode before deploying! If you'd like to turn off Swarm, you have to manually do so.
+**Note:** This won't make your Docker host leave Swarm again, in case it wasn't running in Swarm mode before deploying! If you'd like to turn off Swarm, you have to manually do so.
 
 ### Orchestrator
 
