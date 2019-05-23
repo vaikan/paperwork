@@ -29,6 +29,35 @@ networks:
 services:
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Traefik                                                                    ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  traefik:
+    image: traefik:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.toml:/traefik.toml
+      - ./traefik/acme.json:/acme.json
+    networks:
+      - papernet
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 360s
+      labels:
+        - "traefik.frontend.rule=Host:paperwork.local"
+        - "traefik.port=8080"
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Database                                                                   ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
   db:

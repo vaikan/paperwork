@@ -1,0 +1,14 @@
+defaultEntryPoints = ["http"]
+
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+
+[api]
+    dashboard = true
+
+[Docker]
+    endpoint = "unix:///var/run/docker.sock"
+    exposedByDefault = true
+    swarmMode = true
+    watch = true
