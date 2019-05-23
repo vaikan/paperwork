@@ -76,6 +76,10 @@ Here are the main repositories of Paperwork v2:
 - [`service-storages`](https://github.com/paperwork/service-storages): Storages service that stores all user's attachments
 - [`web`](https://github.com/paperwork/web): Angular-based web front-end for Paperwork
 
+### Paperwork Architecture
+
+![Paperwork Architecture](Paperwork%20Architecture.png)
+
 ### Tasks/Issues
 
 As for now, all tasks/issues are being [collected inside this repository](https://github.com/paperwork/paperwork/issues), just to keep it simple. On a long term, tasks/issues will be transferred into the related service's repository, in order to be able to reference them through git commits.
