@@ -82,7 +82,7 @@ services:
 # ╚════════════════════════════════════════════════════════════════════════════╝
   storage:
     image: minio:latest
-    command: server /data
+    command: server --address ":8080" /data
     environment:
       MINIO_ACCESS_KEY: root
       MINIO_SECRET_KEY: roooooot
@@ -92,11 +92,6 @@ services:
         target: /data/db
     networks:
       - papernet
-    ports:
-      - target: 9000
-        published: 8080
-        protocol: tcp
-        mode: host
     deploy:
       mode: global
       restart_policy:
