@@ -118,6 +118,16 @@ services:
         delay: 10s
         max_attempts: 3
         window: 60s
+      labels:
+        - "traefik.enable=true"
+        - "traefik.protocol=http"
+        - "traefik.port=8080"
+        - "traefik.docker.network=papernet"
+        - "traefik.backend=service_gatekeeper"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.frontend.entryPoints=http"
+        - "traefik.frontend.passHostHeader=true"
+        - "traefik.frontend.rule=Host:api.paperwork.local;PathPrefix:/"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Configs Service                                                            ║
