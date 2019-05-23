@@ -63,9 +63,6 @@ services:
   db:
     image: mongo:latest
     command: --wiredTigerCacheSizeGB 1.5
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - type: bind
         source: ./volumes/mongodb
