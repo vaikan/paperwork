@@ -90,6 +90,19 @@ Here are the main repositories of Paperwork v2:
 
 As for now, all tasks/issues are being [collected inside this repository](https://github.com/paperwork/paperwork/issues), just to keep it simple. On a long term, tasks/issues will be transferred into the related service's repository, in order to be able to reference them through git commits.
 
+## Donating
+
+The best way to help this project is by contributing to the code. However, if that should not be possible to you, but you'd still like to help, the Paperwork project gladly accepts donations in form of Bitcoins and Ether. Please use the following addresses to direct your donations:
+
+### Ethereum: `0x8Ea80Ab7eD3e925BdF1975F5afEb6bcA23C6581a`
+
+![0x8Ea80Ab7eD3e925BdF1975F5afEb6bcA23C6581a](donate-ether.png | width=200)
+
+### Bitcoin: `3DzwbsXp53VhANzF3jF2ch28Qnv1BeX1jk`
+![3DzwbsXp53VhANzF3jF2ch28Qnv1BeX1jk](donate-bitcoin.png | width=200)
+
+**CAUTION: Do not send any donations to anywhere else but those addresses. Unfortunately we had situations in which random people (that were not affiliated with this project in any kind) posted PayPal addresses inside GitHub issues in order to scam money.**
+
 ## Links
 
 - [Browse](https://paperwork.cloud)
