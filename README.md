@@ -76,15 +76,25 @@ Here are the main repositories of Paperwork v2:
 
 - [`paperwork`](https://github.com/paperwork/paperwork): This repository, containing the one-click-deployment and overall documentation
 - [`paperwork.ex`](https://github.com/paperwork/paperwork.ex): Elixir SDK for building Paperwork services
-- [`service-configs`](https://github.com/paperwork/service-configs): Configurations service that stores instance configs and provides them through an internal endpoint to other services
-- [`service-users`](https://github.com/paperwork/service-users): Users service that stores user information and provides endpoints for users to register, login and update their information
-- [`service-notes`](https://github.com/paperwork/service-notes): Notes service that stores all user's notes
-- [`service-storages`](https://github.com/paperwork/service-storages): Storages service that stores all user's attachments
-- [`web`](https://github.com/paperwork/web): Angular-based web front-end for Paperwork
+- [`service-configs`](https://github.com/paperwork/service-configs): Configurations service built in Elixir, that stores instance configs and provides them through an internal endpoint to other services
+- [`service-users`](https://github.com/paperwork/service-users): Users service built in Elixir, that stores user information and provides endpoints for users to register, login and update their information
+- [`service-notes`](https://github.com/paperwork/service-notes): Notes service built in Elixir, that stores all user's notes
+- [`service-storages`](https://github.com/paperwork/service-storages): Storages service built in Elixir, that stores all user's attachments
+- [`web`](https://github.com/paperwork/web): Angular 7-based web front-end for Paperwork
 
 ### Paperwork Architecture
 
 ![Paperwork Architecture](Paperwork%20Architecture.png)
+
+#### Description
+
+The Paperwork project consists of a handful of custom-built API services, which take care of everything related to their specific domain: Configurations, users, notes & attachments. Underneath those, there are various infrastructure services which are either implemented by the Paperwork project (`service-gatekeeper`) or simply awesome third-party open-source projects that's being made use of (e.g. [Minio](https://github.com/minio/minio) and [Traefik](https://github.com/containous/traefik)).
+
+The API services provide the core logic that processes domain specific data and persists it on the service's own database. Each API service has its own database that no other services accesses directly. Instead, services communicate with each other through internal HTTP endpoints. The gatekeeper service abstracts the authroization layer from each individual service by checking and decoding the JWT bearer, so that every service that runs behind `service-gatekeeper` can be sure that access was validated and session information is forwarded and accessible via HTTP headers. JWT crafting is currently done in `service-users`. Hence, `service-gatekeeper` and `service-users` need to share the same JWT secret. Implementation in this area is kept simple for now but will change with the introduction of OAuth2.
+
+While the API services are not exchangeble, infrastructure services usually are. For example Traefik could be replaced with NGINX, Minio with a real Amazon S3 storage and even gatekeeper could more or less easily be replaced with Kong or a similar API gateway in future. API services on the other hand are tighly integrated with the business logic and their own databases. Also, because they exchange information with each other through internal endpoints, they depend on each other and (partially) on their peer's data structures. For example the notes service performs an internal request towards the users service when a note is being requested, in order to include user information (first name, last name, etc) for every `access` definition within that note. This aggregation of data is not neccesary form a back-end point of view and is only done in order to make things more comfortable for the UI layer. While, from a separation-of-concerns-perspective this might not be an ideal setup, it reducdes complexity for now and allows the project to iterate quite quickly.
+
+On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular 7 that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
 
 ### Tasks/Issues
 
