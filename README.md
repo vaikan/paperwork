@@ -106,10 +106,10 @@ The best way to help this project is by contributing to the code. However, if th
 
 ### Ethereum: `0x8Ea80Ab7eD3e925BdF1975F5afEb6bcA23C6581a`
 
-![0x8Ea80Ab7eD3e925BdF1975F5afEb6bcA23C6581a](donate-ether.png | width=200)
+![0x8Ea80Ab7eD3e925BdF1975F5afEb6bcA23C6581a](donate-ether.png)
 
 ### Bitcoin: `3DzwbsXp53VhANzF3jF2ch28Qnv1BeX1jk`
-![3DzwbsXp53VhANzF3jF2ch28Qnv1BeX1jk](donate-bitcoin.png | width=200)
+![3DzwbsXp53VhANzF3jF2ch28Qnv1BeX1jk](donate-bitcoin.png)
 
 **CAUTION: Do not send any donations to anywhere else but those addresses. Unfortunately we had situations in which random people (that were not affiliated with this project in any kind) posted PayPal addresses inside GitHub issues in order to scam money.**
 
