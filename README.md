@@ -18,7 +18,7 @@ Also, you can join the [official chatroom](https://riot.im/app/#/room/#paperwork
 
 **Info: 99% of the action happens [inside the other repositories](https://github.com/paperwork)! This repository only contains of the one-click-deployment of Paperwork!**
 
-## Usage
+## Setup
 
 This repository is structuring and unifying all required components for Paperwork. It its purpose is to provide an **example of how you *could* host Paperwork yourself**. However, please keep in mind that the stack file used in this repostiory should **not be used for real-world, internet-facing deployments**, as it lacks the ability to manage credentials between services in a secure manner.
 
@@ -65,6 +65,10 @@ $ make deploy ORCHESTRATOR=kubernetes
 ```
 
 For more info, check the official Docker documentation [for Mac](https://docs.docker.com/docker-for-mac/kubernetes/#override-the-default-orchestrator) and [Windows](https://docs.docker.com/docker-for-windows/kubernetes/#override-the-default-orchestrator).
+
+## Usage
+
+As soon as you've finished the setup, you should be able to access [your Paperwork deployment through this URL](http://www.paperwork.local).
 
 ## Developing / Contributing
 
