@@ -76,11 +76,11 @@ Here are the main repositories of Paperwork v2:
 
 - [`paperwork`](https://github.com/paperwork/paperwork): This repository, containing the one-click-deployment and overall documentation
 - [`paperwork.ex`](https://github.com/paperwork/paperwork.ex): Elixir SDK for building Paperwork services
-- [`service-configs`](https://github.com/paperwork/service-configs) <img src="https://img.shields.io/docker/cloud/build/paperwork/service-configs.svg?style=flat-square"/>: Configurations service built in Elixir, that stores instance configs and provides them through an internal endpoint to other services
-- [`service-users`](https://github.com/paperwork/service-users) <img src="https://img.shields.io/docker/cloud/build/paperwork/service-users.svg?style=flat-square"/>: Users service built in Elixir, that stores user information and provides endpoints for users to register, login and update their information
-- [`service-notes`](https://github.com/paperwork/service-notes) <img src="https://img.shields.io/docker/cloud/build/paperwork/service-notes.svg?style=flat-square"/>: Notes service built in Elixir, that stores all user's notes
-- [`service-storages`](https://github.com/paperwork/service-storages) <img src="https://img.shields.io/docker/cloud/build/paperwork/service-storages.svg?style=flat-square"/>: Storages service built in Elixir, that stores all user's attachments
-- [`web`](https://github.com/paperwork/web) <img src="https://img.shields.io/docker/cloud/build/paperwork/web.svg?style=flat-square"/>: Angular 7-based web front-end for Paperwork
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/service-configs.svg?style=flat-square"/> [`service-configs`](https://github.com/paperwork/service-configs): Configurations service built in Elixir, that stores instance configs and provides them through an internal endpoint to other services
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/service-users.svg?style=flat-square"/> [`service-users`](https://github.com/paperwork/service-users): Users service built in Elixir, that stores user information and provides endpoints for users to register, login and update their information
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/service-notes.svg?style=flat-square"/> [`service-notes`](https://github.com/paperwork/service-notes): Notes service built in Elixir, that stores all user's notes
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/service-storages.svg?style=flat-square"/> [`service-storages`](https://github.com/paperwork/service-storages): Storages service built in Elixir, that stores all user's attachments
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/web.svg?style=flat-square"/> [`web`](https://github.com/paperwork/web): Angular 7-based web front-end for Paperwork
 
 ### Paperwork Architecture
 
