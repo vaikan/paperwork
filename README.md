@@ -68,7 +68,11 @@ For more info, check the official Docker documentation [for Mac](https://docs.do
 
 ## Usage
 
-As soon as you've finished the setup, you should be able to access [your Paperwork deployment through this URL](http://www.paperwork.local).
+As soon as you've finished the setup, you should be able to access [your Paperwork deployment through this URL](http://www.paperwork.local) and you should be greeted with the login/registration:
+
+![Welcome to Paperwork](https://github.com/paperwork/web/raw/master/docs/current-state-01.png)
+
+In order to use Paperwork, you will need to register a new account.
 
 ## Developing / Contributing
 
