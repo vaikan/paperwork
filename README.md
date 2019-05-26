@@ -18,6 +18,12 @@ Also, you can join the [official chatroom](https://riot.im/app/#/room/#paperwork
 
 **Info: 99% of the action happens [inside the other repositories](https://github.com/paperwork)! This repository only contains of the one-click-deployment of Paperwork!**
 
+## Spoiler
+
+In order to get Paperwork in its current state (*under development*) running, you have to have an understanding for how Docker and DNS works and know the basic concepts of HTTP proxying. Also, experience with Traefik and Minio might come in handy. 
+
+If you don't have that, then the current state of Paperwork probably isn't for you in first place. To make it clear: **This software is not *usable* at this moment. It's being worked on to be *made usable* in the near future. In its current state, Paperwork v2 is targeted to developers that would like to get their hands dirty and contribute to the project.**
+
 ## Setup
 
 This repository is structuring and unifying all required components for Paperwork. It its purpose is to provide an **example of how you *could* host Paperwork yourself**. However, please keep in mind that the stack file used in this repostiory should **not be used for real-world, internet-facing deployments**, as it lacks the ability to manage credentials between services in a secure manner.
