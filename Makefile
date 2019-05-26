@@ -24,11 +24,9 @@ help: ##@Miscellaneous Show this help
 	@echo "Usage: make [target] <var> ...\n"
 	@perl -e '$(FN_HELP)' $(MAKEFILE_LIST)
 
-init: ##@Init Initialize Docker Swarm
-	docker service ls || docker swarm init
-
 deploy: ##@Deployment Deploy Paperwork
-	docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
+	(docker service ls || docker swarm init) \
+	&& docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
 # 	docker stack ps --orchestrator=${ORCHESTRATOR} ${STACK_NAME} > /dev/null \
 # 	&& $(error Paperwork already deployed! Run `make undeploy` first.) \
 # 	|| docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
