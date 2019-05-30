@@ -34,7 +34,7 @@ $ git clone git@github.com:paperwork/paperwork.git
 
 ### Docker Stack
 
-In order to easily get Paperwork running as a Docker stack, utilizing whichever orchestrator you'd like, this repository comes with a handy Makefile. Let's have a look at it:
+In order to easily get Paperwork running as a Docker stack, utilising whichever orchestrator you'd like, this repository comes with a handy Makefile. Let's have a look at it:
 
 ```bash
 $ make help
@@ -46,7 +46,7 @@ Launching the Paperwork can be done by make`-ing the `deploy` target:
 $ make deploy
 ```
 
-The Makefile then takes care of initializing Swarm, in case you haven't done that already, creating the encrypted network (`papernet`) and deploying the Paperwork stack on top of it.
+The Makefile then takes care of initialising Swarm, in case you haven't done that already, creating the encrypted network (`papernet`) and deploying the Paperwork stack on top of it.
 
 **Note:** This Docker stack is configured to use `www.paperwork.local` (for the [web UI](https://github.com/paperwork/web)) and `api.paperwork.local` (for the API services). Hence you will need to add these to the `127.0.0.1` entry in your `/etc/hosts` file:
 
@@ -104,9 +104,9 @@ Here are the main repositories of Paperwork v2:
 
 The Paperwork project consists of a handful of custom-built API services, which take care of everything related to their specific domain: Configurations, users, notes & attachments. Underneath those, there are various infrastructure services which are either implemented by the Paperwork project (`service-gatekeeper`) or simply awesome third-party open-source projects that's being made use of (e.g. [Minio](https://github.com/minio/minio) and [Traefik](https://github.com/containous/traefik)).
 
-The API services provide the core logic that processes domain specific data and persists it on the service's own database. Each API service has its own database that no other services accesses directly. Instead, services communicate with each other through internal HTTP endpoints. The gatekeeper service abstracts the authroization layer from each individual service by checking and decoding the JWT bearer, so that every service that runs behind `service-gatekeeper` can be sure that access was validated and session information is forwarded and accessible via HTTP headers. JWT crafting is currently done in `service-users`. Hence, `service-gatekeeper` and `service-users` need to share the same JWT secret. Implementation in this area is kept simple for now but will change with the introduction of OAuth2.
+The API services provide the core logic that processes domain specific data and persists it on the service's own database. Each API service has its own database that no other services accesses directly. Instead, services communicate with each other through internal HTTP endpoints. The gatekeeper service abstracts the authorisation layer from each individual service by checking and decoding the JWT bearer, so that every service that runs behind `service-gatekeeper` can be sure that access was validated and session information is forwarded and accessible via HTTP headers. JWT crafting is currently done in `service-users`. Hence, `service-gatekeeper` and `service-users` need to share the same JWT secret. Implementation in this area is kept simple for now but will change with the introduction of OAuth 2.
 
-While the API services are not exchangeble, infrastructure services usually are. For example Traefik could be replaced with NGINX, Minio with a real Amazon S3 storage and even gatekeeper could more or less easily be replaced with Kong or a similar API gateway in future. API services on the other hand are tighly integrated with the business logic and their own databases. Also, because they exchange information with each other through internal endpoints, they depend on each other and (partially) on their peer's data structures. For example the notes service performs an internal request towards the users service when a note is being requested, in order to include user information (first name, last name, etc) for every `access` definition within that note. This aggregation of data is not neccesary form a back-end point of view and is only done in order to make things more comfortable for the UI layer. While, from a separation-of-concerns-perspective this might not be an ideal setup, it reducdes complexity for now and allows the project to iterate quite quickly.
+While the API services are not exchangeable, infrastructure services usually are. For example Traefik could be replaced with NGINX, Minio with a real Amazon S3 storage and even gatekeeper could more or less easily be replaced with Kong or a similar API gateway in future. API services on the other hand are tightly integrated with the business logic and their own databases. Also, because they exchange information with each other through internal endpoints, they depend on each other and (partially) on their peer's data structures. For example the notes service performs an internal request towards the users service when a note is being requested, in order to include user information (first name, last name, etc) for every `access` definition within that note. This aggregation of data is not necessary form a back-end point of view and is only done in order to make things more comfortable for the UI layer. While, from a separation-of-concerns-perspective this might not be an ideal setup, it reduces complexity for now and allows the project to iterate quite quickly.
 
 On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular 7 that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
 
