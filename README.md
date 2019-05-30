@@ -140,6 +140,8 @@ Optionally, if you plan to run any of the following services, you'll need to mak
 - `8082`: [`service-notes`](https://github.com/paperwork/service-notes)
 - `8083`: [`service-storages`](https://github.com/paperwork/service-storages)
 
+Check [this video (38MB)](https://d.pr/v/AN2r8D) in order to see how easy it is to get your local development up and running with `make local-run-develop`.
+
 ### Tasks/Issues
 
 As for now, all tasks/issues are being [collected inside this repository](https://github.com/paperwork/paperwork/issues), just to keep it simple. On a long term, tasks/issues will be transferred into the related service's repository, in order to be able to reference them through git commits.
