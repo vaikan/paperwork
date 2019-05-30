@@ -10,10 +10,6 @@
 # ╚════════════════════════════════════════════════════════════════════════════╝
 .PHONY: help init deploy undeploy status
 
-ORCHESTRATOR ?= swarm  ##@Variables The Docker orchestrator to use, default: swarm
-STACK_NAME ?= paperwork  ##@Variables The Docker stack name, default: paperwork
-COMPOSE_FILE ?= paperwork.yml  ##@Variables The Docker stack compose file to use, default: paperwork.yml
-
 FN_HELP = \
 	%help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
 		if/^(\w+)\s*(?:).*\#\#(?:@(\w+))?\s(.*)$$/}; \
@@ -24,18 +20,5 @@ help: ##@Miscellaneous Show this help
 	@echo "Usage: make [target] <var> ...\n"
 	@perl -e '$(FN_HELP)' $(MAKEFILE_LIST)
 
-deploy: ##@Deployment Deploy Paperwork
-	(docker service ls || docker swarm init) \
-	&& docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
-# 	docker stack ps --orchestrator=${ORCHESTRATOR} ${STACK_NAME} > /dev/null \
-# 	&& $(error Paperwork already deployed! Run `make undeploy` first.) \
-# 	|| docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
-
-undeploy: ##@Deployment Undeploy Paperwork
-	docker stack rm --orchestrator=${ORCHESTRATOR} ${STACK_NAME}
-
-status: ##@Deployment Check Paperwork deployment status
-	docker stack ps --orchestrator=${ORCHESTRATOR} ${STACK_NAME}
-
-local-run-develop: ##@Local Run local dev env
-	$(MAKE) all -C development
+all: ##@Development Run local dev env
+	./local.sh

@@ -111,6 +111,35 @@ While the API services are not exchangeable, infrastructure services usually are
 
 On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular 7 that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
 
+### Local development environment
+
+This repository not only features a one-click Docker Stack deployment, but also a local development environment which should work on any Linux/Unix platform. The goal is to provide you with a way to easily run an environment you can use to develop on individual services or UIs.
+
+#### Using the `local dev env`
+
+In order to launch the local development environment, simply utilise the same make command you use for running local development instances for each Paperwork service: `make local-run-develop`
+
+```bash
+$ cd paperwork/
+$ make local-run-develop
+```
+
+The local dev env will start up with a short info on what's needed in order for it to function correctly. Please **read the instructions provided there** and follow them carefully. You will need to have some dependencies (e.g. Docker, Caddy) ready to use in order for the local dev environment to function.
+
+Also make sure to have the following TCP ports free on your system while using the local dev env:
+
+- `8000`: [Caddy](https://github.com/mholt/caddy) proxy
+- `1337`: [`service-gatekeeper`](https://github.com/paperwork/service-gatekeeper)
+- `4200`: [`web`](https://github.com/paperwork/web)
+- `9000`: [Minio](https://github.com/minio/minio) (used as `service-storages` back-end)
+
+Optionally, if you plan to run any of the following services, you'll need to make sure to have their local dev env ports free as well:
+
+- `8080`: [`service-configs`](https://github.com/paperwork/service-configs)
+- `8081`: [`service-users`](https://github.com/paperwork/service-users)
+- `8082`: [`service-notes`](https://github.com/paperwork/service-notes)
+- `8083`: [`service-storages`](https://github.com/paperwork/service-storages)
+
 ### Tasks/Issues
 
 As for now, all tasks/issues are being [collected inside this repository](https://github.com/paperwork/paperwork/issues), just to keep it simple. On a long term, tasks/issues will be transferred into the related service's repository, in order to be able to reference them through git commits.
