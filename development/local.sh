@@ -49,10 +49,10 @@ http://dev.api.paperwork.local:8000
 From that point on you'll be able to work with the local dev environment. All
 there's left to do then is to start the services you're working on/with.
 
-Simply run `make local-run-develop` inside each service's directory and it will
+Simply run 'make local-run-develop' inside each service's directory and it will
 automatically start using the local dev env.
 
-NOTE: You *need* to run `service-gatekeeper` in order for this to function.
+NOTE: You *need* to run 'service-gatekeeper' in order for this to function.
 
 EOF
 
