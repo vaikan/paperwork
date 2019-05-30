@@ -90,6 +90,7 @@ Here are the main repositories of Paperwork v2:
 
 - [`paperwork`](https://github.com/paperwork/paperwork): This repository, containing the one-click-deployment and overall documentation
 - [`paperwork.ex`](https://github.com/paperwork/paperwork.ex): Elixir SDK for building Paperwork services
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/service-gatekeeper.svg?style=flat-square"/> [`service-gatekeeper`](https://github.com/paperwork/service-gatekeeper): Gatekeeper service built in Rust, that reverse-proxies requests to individual services and takes care of JWT validation/decoding
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-configs.svg?style=flat-square"/> [`service-configs`](https://github.com/paperwork/service-configs): Configurations service built in Elixir, that stores instance configs and provides them through an internal endpoint to other services
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-users.svg?style=flat-square"/> [`service-users`](https://github.com/paperwork/service-users): Users service built in Elixir, that stores user information and provides endpoints for users to register, login and update their information
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-notes.svg?style=flat-square"/> [`service-notes`](https://github.com/paperwork/service-notes): Notes service built in Elixir, that stores all user's notes
