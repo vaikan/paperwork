@@ -76,7 +76,7 @@ echo "Updating MongoDB ..."
 docker pull mongo:latest
 
 echo "Launching MongoDB ..."
-docker run -itd --rm --name mongodb -p 27017:27017 mongo:latest
+docker run -itd --rm --name service-database --hostname service-database -p 27017:27017 mongo:latest
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Storages back-end                                                          ║
@@ -85,7 +85,7 @@ echo "Updating Minio ..."
 docker pull minio/minio
 
 echo "Launching Minio ..."
-docker run -itd --rm --name minio -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio server /data
+docker run -itd --rm --name service-storages-backend --hostname service-storages-backend -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio server /data
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Proxy (attached)                                                           ║
@@ -104,10 +104,10 @@ caddy -conf Caddyfile
 # ╚════════════════════════════════════════════════════════════════════════════╝
 echo ""
 echo "Stopping Minio ..."
-docker stop minio
+docker stop service-storages-backend
 
 echo "Stopping MongoDB ..."
-docker stop mongodb
+docker stop service-database
 
 echo "Local dev env has stopped."
 exit 0
