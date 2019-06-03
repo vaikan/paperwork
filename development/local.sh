@@ -82,7 +82,7 @@ docker run -itd --rm --name mongodb -p 27017:27017 mongo:latest
 # ║ Storages back-end                                                          ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 echo "Updating Minio ..."
-docker pull mongo:latest
+docker pull minio/minio
 
 echo "Launching Minio ..."
 docker run -itd --rm --name minio -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio:latest server /data
