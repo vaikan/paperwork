@@ -162,6 +162,7 @@ services:
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
       INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
+      INTERNAL_RESOURCE_JOURNALS: http://service_journals:8080/internal/journals
     networks:
       - papernet
     depends_on:
@@ -189,6 +190,7 @@ services:
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
       INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
+      INTERNAL_RESOURCE_JOURNALS: http://service_journals:8080/internal/journals
     networks:
       - papernet
     depends_on:
@@ -215,6 +217,7 @@ services:
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
       INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
+      INTERNAL_RESOURCE_JOURNALS: http://service_journals:8080/internal/journals
     networks:
       - papernet
     depends_on:
@@ -244,11 +247,41 @@ services:
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
       INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
+      INTERNAL_RESOURCE_JOURNALS: http://service_journals:8080/internal/journals
     networks:
       - papernet
     depends_on:
       - service_collections
       - service_storages_backend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Journals Service                                                           ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  service_journals:
+    image: paperwork/service-journals:latest
+    environment:
+      PORT: 8080
+      MONGODB_URL: mongodb://service_collections:27017/journals
+      EVENTS_URL: amqp://service_events
+      INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
+      INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
+      INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
+      INTERNAL_RESOURCE_ATTACHMENTS: http://service_storages:8080/internal/attachments
+      INTERNAL_RESOURCE_JOURNALS: http://service_journals:8080/internal/journals
+    networks:
+      - papernet
+    depends_on:
+      - service_collections
+      - service_events
     deploy:
       replicas: 1
       update_config:
