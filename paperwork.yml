@@ -81,7 +81,7 @@ services:
 # ║ File storage                                                               ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
   service_storages_backend:
-    image: minio:latest
+    image: minio/minio:latest
     command: server --address ':8080' /data
     environment:
       MINIO_ACCESS_KEY: root
@@ -89,7 +89,7 @@ services:
     volumes:
       - type: bind
         source: ./volumes/minio
-        target: /data/db
+        target: /data
     networks:
       - papernet
     deploy:
