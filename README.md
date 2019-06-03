@@ -95,6 +95,7 @@ Here are the main repositories of Paperwork v2:
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-users.svg?style=flat-square"/> [`service-users`](https://github.com/paperwork/service-users): Users service built in Elixir, that stores user information and provides endpoints for users to register, login and update their information
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-notes.svg?style=flat-square"/> [`service-notes`](https://github.com/paperwork/service-notes): Notes service built in Elixir, that stores all user's notes
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-storages.svg?style=flat-square"/> [`service-storages`](https://github.com/paperwork/service-storages): Storages service built in Elixir, that stores all user's attachments
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/service-journals.svg?style=flat-square"/> [`service-journals`](https://github.com/paperwork/service-storages): Journals service built in Elixir, that stores events related to database changes inside journals in order to provide information about these changes to the API clients
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/web.svg?style=flat-square"/> [`web`](https://github.com/paperwork/web): Angular 7-based web front-end for Paperwork
 
 ### Paperwork Architecture
@@ -139,6 +140,7 @@ Optionally, if you plan to run any of the following services, you'll need to mak
 - `8081`: [`service-users`](https://github.com/paperwork/service-users)
 - `8082`: [`service-notes`](https://github.com/paperwork/service-notes)
 - `8083`: [`service-storages`](https://github.com/paperwork/service-storages)
+- `8084`: [`service-journals`](https://github.com/paperwork/service-journals)
 
 Check [this video (38MB)](https://d.pr/v/AN2r8D) in order to see how easy it is to get your local development up and running with `make local-run-develop`.
 
