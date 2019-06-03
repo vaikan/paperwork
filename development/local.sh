@@ -85,7 +85,7 @@ echo "Updating Minio ..."
 docker pull minio/minio
 
 echo "Launching Minio ..."
-docker run -itd --rm --name minio -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio:latest server /data
+docker run -itd --rm --name minio -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio server /data
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Proxy (attached)                                                           ║
