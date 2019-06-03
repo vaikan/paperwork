@@ -94,7 +94,12 @@ echo "Updating RabbitMQ ..."
 docker pull rabbitmq:alpine
 
 echo "Launching RabbitMQ ..."
-docker run -itd --rm --name service_events --hostname service_events -e RABBITMQ_ERLANG_COOKIE='D]v!y;>nR!796v)S,R9J,J!zb^,a;m{:I0u^{2;{{82FV5p9YtUisT&,<4L$KC(^' -p 5672:5672 rabbitmq:alpine
+docker run -itd --rm --name service_events --hostname service_events -e RABBITMQ_ERLANG_COOKIE='D]v!y;>nR!796v)S,R9J,J!zb^,a;m{:I0u^{2;{{82FV5p9YtUisT&,<4L$KC(^' -p 5672:5672 -p 15672:15672 rabbitmq:alpine
+
+echo "Waiting for RabbitMQ to become available ..."
+sleep 10 #TODO: fake it till you make it
+echo "Enabling plugins ..."
+docker exec -it service_events /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_management
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Proxy (attached)                                                           ║
