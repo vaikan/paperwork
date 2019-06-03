@@ -70,13 +70,13 @@ type caddy > /dev/null \
 || (echo "Caddy could not be found!" && exit 1)
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
-# ║ Database                                                                   ║
+# ║ Collections (database)                                                       ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 echo "Updating MongoDB ..."
 docker pull mongo:latest
 
 echo "Launching MongoDB ..."
-docker run -itd --rm --name service-database --hostname service-database -p 27017:27017 mongo:latest
+docker run -itd --rm --name service_collections --hostname service_collections -p 27017:27017 mongo:latest
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Storages back-end                                                          ║
@@ -85,7 +85,7 @@ echo "Updating Minio ..."
 docker pull minio/minio
 
 echo "Launching Minio ..."
-docker run -itd --rm --name service-storages-backend --hostname service-storages-backend -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio server /data
+docker run -itd --rm --name service_storages_backend --hostname service_storages_backend -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio server /data
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Message broker                                                             ║
@@ -94,7 +94,7 @@ echo "Updating RabbitMQ ..."
 docker pull rabbitmq:alpine
 
 echo "Launching RabbitMQ ..."
-docker run -itd --rm --name service-events --hostname service-events -e RABBITMQ_ERLANG_COOKIE='D]v!y;>nR!796v)S,R9J,J!zb^,a;m{:I0u^{2;{{82FV5p9YtUisT&,<4L$KC(^' -p 5672:5672 rabbitmq:alpine
+docker run -itd --rm --name service_events --hostname service_events -e RABBITMQ_ERLANG_COOKIE='D]v!y;>nR!796v)S,R9J,J!zb^,a;m{:I0u^{2;{{82FV5p9YtUisT&,<4L$KC(^' -p 5672:5672 rabbitmq:alpine
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Proxy (attached)                                                           ║
@@ -114,13 +114,13 @@ caddy -conf Caddyfile
 echo ""
 
 echo "Stopping RabbitMQ ..."
-docker stop service-events
+docker stop service_events
 
 echo "Stopping Minio ..."
-docker stop service-storages-backend
+docker stop service_storages_backend
 
 echo "Stopping MongoDB ..."
-docker stop service-database
+docker stop service_collections
 
 echo "Local dev env has stopped."
 exit 0
