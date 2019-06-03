@@ -88,6 +88,15 @@ echo "Launching Minio ..."
 docker run -itd --rm --name service-storages-backend --hostname service-storages-backend -e 'MINIO_ACCESS_KEY=root' -e 'MINIO_SECRET_KEY=roooooot' -p 9000:9000 minio/minio server /data
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Message broker                                                             ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+echo "Updating RabbitMQ ..."
+docker pull rabbitmq:alpine
+
+echo "Launching RabbitMQ ..."
+docker run -itd --rm --name service-events --hostname service-events -e RABBITMQ_ERLANG_COOKIE='D]v!y;>nR!796v)S,R9J,J!zb^,a;m{:I0u^{2;{{82FV5p9YtUisT&,<4L$KC(^' -p 5672:5672 rabbitmq:alpine
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Proxy (attached)                                                           ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 echo "Checking Caddyfile ..."
@@ -103,6 +112,10 @@ caddy -conf Caddyfile
 # ║ Proxy terminated, running shut-down procedure at this point                ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
 echo ""
+
+echo "Stopping RabbitMQ ..."
+docker stop service-events
+
 echo "Stopping Minio ..."
 docker stop service-storages-backend
 
