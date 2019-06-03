@@ -101,6 +101,27 @@ services:
         window: 360s
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
+# ║ Message broker                                                             ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+  service_events:
+    image: rabbitmq:alpine
+    environment:
+      RABBITMQ_ERLANG_COOKIE: 'D]v!y;>nR!796v)S,R9J,J!zb^,a;m{:I0u^{2;\{\{82FV5p9YtUisT&,<4L$KC(^'
+    volumes:
+      - type: bind
+        source: ./volumes/rabbitmq
+        target: /var/lib/rabbitmq
+    networks:
+      - papernet
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 360s
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Gatekeeper Service                                                         ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
   service_gatekeeper:
