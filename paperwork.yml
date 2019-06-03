@@ -58,9 +58,9 @@ services:
         - "traefik.port=8080"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
-# ║ Database                                                                   ║
+# ║ Collections (database)                                                     ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
-  db:
+  service_collections:
     image: mongo:latest
     command: --wiredTigerCacheSizeGB 1.5
     volumes:
@@ -80,9 +80,9 @@ services:
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ File storage                                                               ║
 # ╚════════════════════════════════════════════════════════════════════════════╝
-  storage:
+  service_storages_backend:
     image: minio:latest
-    command: server --address ":8080" /data
+    command: server --address ':8080' /data
     environment:
       MINIO_ACCESS_KEY: root
       MINIO_SECRET_KEY: roooooot
@@ -136,7 +136,7 @@ services:
     image: paperwork/service-configs:latest
     environment:
       PORT: 8080
-      MONGODB_URL: mongodb://db:27017/configs
+      MONGODB_URL: mongodb://service_collections:27017/configs
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
@@ -144,7 +144,7 @@ services:
     networks:
       - papernet
     depends_on:
-      - db
+      - service_collections
     deploy:
       replicas: 1
       update_config:
@@ -163,7 +163,7 @@ services:
     environment:
       PORT: 8080
       JWT_SECRET: "ru4XngBQ/uXZX4o/dTjy3KieL7OHkqeKwGH9KhClVnfpEaRcpw+rNvvSiC66dyiY"
-      MONGODB_URL: mongodb://db:27017/users
+      MONGODB_URL: mongodb://service_collections:27017/users
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
@@ -171,7 +171,7 @@ services:
     networks:
       - papernet
     depends_on:
-      - db
+      - service_collections
     deploy:
       replicas: 1
       update_config:
@@ -189,7 +189,7 @@ services:
     image: paperwork/service-notes:latest
     environment:
       PORT: 8080
-      MONGODB_URL: mongodb://db:27017/notes
+      MONGODB_URL: mongodb://service_collections:27017/notes
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
       INTERNAL_RESOURCE_USERS: http://service_users:8080/internal/users
       INTERNAL_RESOURCE_NOTES: http://service_notes:8080/internal/notes
@@ -197,7 +197,7 @@ services:
     networks:
       - papernet
     depends_on:
-      - db
+      - service_collections
     deploy:
       replicas: 1
       update_config:
@@ -215,8 +215,8 @@ services:
     image: paperwork/service-storages:latest
     environment:
       PORT: 8080
-      MONGODB_URL: mongodb://db:27017/storages
-      STORAGE_URL: http://storage:8080
+      MONGODB_URL: mongodb://service_collections:27017/storages
+      STORAGE_URL: http://service_storages_backend:8080
       AWS_ACCESS_KEY_ID: root
       AWS_SECRET_ACCESS_KEY: roooooot
       INTERNAL_RESOURCE_CONFIGS: http://service_configs:8080/internal/configs
@@ -226,8 +226,8 @@ services:
     networks:
       - papernet
     depends_on:
-      - db
-      - storage
+      - service_collections
+      - service_storages_backend
     deploy:
       replicas: 1
       update_config:
