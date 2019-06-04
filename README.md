@@ -129,10 +129,12 @@ The local dev env will start up with a short info on what's needed in order for 
 
 Also make sure to have the following TCP ports free on your system while using the local dev env:
 
-- `8000`: [Caddy](https://github.com/mholt/caddy) proxy
-- `1337`: [`service-gatekeeper`](https://github.com/paperwork/service-gatekeeper)
-- `4200`: [`web`](https://github.com/paperwork/web)
-- `9000`: [Minio](https://github.com/minio/minio) (used as `service-storages` back-end)
+-  `1337`: [`service-gatekeeper`](https://github.com/paperwork/service-gatekeeper)
+-  `4200`: [`web`](https://github.com/paperwork/web)
+-  `5672`: [RabbitMQ](https://www.rabbitmq.com) (a.k.a. `service-events`)
+-  `8000`: [Caddy](https://github.com/mholt/caddy) proxy
+-  `9000`: [Minio](https://github.com/minio/minio) (used as `service-storages` back-end)
+- `15672`: [RabbitMQ management interface](http://localhost:15672/)
 
 Optionally, if you plan to run any of the following services, you'll need to make sure to have their local dev env ports free as well:
 
