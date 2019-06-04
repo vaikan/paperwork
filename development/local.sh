@@ -100,6 +100,11 @@ echo "Waiting for RabbitMQ to become available ..."
 sleep 10 #TODO: fake it till you make it
 echo "Enabling plugins ..."
 docker exec -it service_events /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_management
+echo ""
+echo "RabbitMQ management interface should not be available at:"
+echo ""
+echo "http://localhost:15672"
+echo ""
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Proxy (attached)                                                           ║
