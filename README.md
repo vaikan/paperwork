@@ -134,7 +134,7 @@ Also make sure to have the following TCP ports free on your system while using t
 -  `5672`: [RabbitMQ](https://www.rabbitmq.com) (a.k.a. `service-events`)
 -  `8000`: [Caddy](https://github.com/mholt/caddy) proxy
 -  `9000`: [Minio](https://github.com/minio/minio) (used as `service-storages` back-end)
-- `15672`: [RabbitMQ management interface](http://localhost:15672/)
+- `15672`: [RabbitMQ management interface](http://localhost:15672/), default login username `guest`, password `guest`
 
 Optionally, if you plan to run any of the following services, you'll need to make sure to have their local dev env ports free as well:
 
