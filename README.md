@@ -40,6 +40,8 @@ In order to easily get Paperwork running as a Docker stack, utilising whichever 
 $ make help
 ```
 
+#### Deploy
+
 Launching the Paperwork can be done by make`-ing the `deploy` target:
 
 ```bash
@@ -48,11 +50,26 @@ $ make deploy
 
 The Makefile then takes care of initialising Swarm, in case you haven't done that already, creating the encrypted network (`papernet`) and deploying the Paperwork stack on top of it.
 
-**Note:** This Docker stack is configured to use `www.paperwork.local` (for the [web UI](https://github.com/paperwork/web)) and `api.paperwork.local` (for the API services). Hence you will need to add these to the `127.0.0.1` entry in your `/etc/hosts` file:
+#### Configuration
+
+This Docker stack is configured to use `www.paperwork.local` (for the [web UI](https://github.com/paperwork/web)) and `api.paperwork.local` (for the API services) by default. Hence you will need to add these to the `127.0.0.1` entry in your `/etc/hosts` file:
 
 ```
 127.0.0.1   localhost paperwork.local api.paperwork.local www.paperwork.local
 ```
+
+If you'd want to use a different domain and different hostnames for web and API, make sure to export the following env variables:
+
+- `PAPERWORK_API_PROTOCOL` (`http` by default, `https` also possible)
+- `PAPERWORK_API_HOSTNAME` (`api` by default)
+- `PAPERWORK_WEB_HOSTNAME` (`www` by default)
+- `PAPERWORK_DOMAIN` (`paperwork.local` by default)
+
+In addition to these variables, you can also use the following ones to override a couple of other defaults:
+
+- `PAPERWORK_JWT_SECRET` (the JWT secret used by `service_gatekeeper` and `service_users`)
+
+#### Undeploy
 
 In order to stop/remove the whole stack, simply use the `undeploy` target:
 
