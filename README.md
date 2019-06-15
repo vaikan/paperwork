@@ -24,9 +24,15 @@ In order to get Paperwork in its current state (*under development*) running, yo
 
 If you don't have that, then the current state of Paperwork probably isn't for you in first place. To make it clear: **This software is not *usable* at this moment. It's being worked on to be *made usable* in the near future. In its current state, Paperwork v2 is targeted to developers that would like to get their hands dirty and contribute to the project.**
 
+## Demo
+
+A demo of the current Paperwork status is available at [http://www.demo.paperwork.cloud](http://www.demo.paperwork.cloud) (sorry, no HTTPs yet!). This instance won't persist data on the server side, but it does cache it inside your browser session. The instance is being destroyed every night at 1am UTC. Therefor all accounts are only valid for maximum one day. **Please do not use this instance to store actual data/sensitive information!**
+
+This demo instance is sponsored by [twostairs](https://twostairs.com).
+
 ## Setup
 
-This repository is structuring and unifying all required components for Paperwork. It its purpose is to provide an **example of how you *could* host Paperwork yourself**. However, please keep in mind that the stack file used in this repostiory should **not be used for real-world, internet-facing deployments**, as it lacks the ability to manage credentials between services in a secure manner.
+This repository is structuring and unifying all required components for Paperwork. It its purpose is to provide an **example of how you *could* host Paperwork yourself**. However, please keep in mind that the stack file used in this repository should **not be used for real-world, internet-facing deployments**, as it lacks the ability to manage credentials between services in a secure manner.
 
 ```bash
 $ git clone git@github.com:paperwork/paperwork.git
