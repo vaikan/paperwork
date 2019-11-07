@@ -1,0 +1,6 @@
+theme: jekyll-theme-minimal
+logo: paperwork-logo.png
+title: Paperwork
+description: Paperwork is an open-source, self-hosted alternative to services like Evernote ®, Microsoft OneNote ® or Google Keep ®
+show_downloads: "true"
+google_analytics: UA-59554720-1

@@ -1,10 +1,8 @@
 .DS_Store
-.codekit-cache
-frontend/app/storage/attachments/*
-frontend/node_modules
-frontend/public/css
-!frontend/public/css/bootstrap-editable.css
-frontend/public/js
-!frontend/public/js/bootstrap-editable.min.js
-Thumbs.db
-frontend/npm-debug.log
+*.sublime-workspace
+volumes/mongodb/*
+!volumes/mongodb/.gitkeep
+volumes/minio/*
+!volumes/minio/.gitkeep
+volumes/rabbitmq/*
+!volumes/rabbitmq/.gitkeep
