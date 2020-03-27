@@ -139,7 +139,7 @@ On top of the infrastructure and API services there is the UI layer that was jus
 
 This repository not only features a one-click Docker Stack deployment, but also a local development environment which should work on any Linux/Unix platform. The goal is to provide you with a way to easily run an environment you can use to develop on individual services or UIs.
 
-#### Using the `local dev env`
+#### Using the local development environment
 
 In order to launch the local development environment, simply utilise the same make command you use for running local development instances for each Paperwork service: `make local-run-develop`
 
@@ -148,7 +148,7 @@ $ cd paperwork/
 $ make local-run-develop
 ```
 
-The local dev env will start up with a short info on what's needed in order for it to function correctly. Please **read the instructions provided there** and follow them carefully. You will need to have some dependencies (e.g. Docker, Caddy) ready to use in order for the local dev environment to function.
+The local development environment will start up with a short info on what's needed in order for it to function correctly. Please **read the instructions provided there** and follow them carefully. You will need to have some dependencies (e.g. Docker, Caddy) ready to use in order for the local development environment to function.
 
 Also make sure to have the following TCP ports free on your system while using the local dev env:
 
