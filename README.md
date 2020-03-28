@@ -119,7 +119,7 @@ Here are the main repositories of Paperwork v2:
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-notes.svg?style=flat-square"/> [`service-notes`](https://github.com/paperwork/service-notes): Notes service built in Elixir, that stores all user's notes
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-storages.svg?style=flat-square"/> [`service-storages`](https://github.com/paperwork/service-storages): Storages service built in Elixir, that stores all user's attachments
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-journals.svg?style=flat-square"/> [`service-journals`](https://github.com/paperwork/service-storages): Journals service built in Elixir, that stores events related to database changes inside journals in order to provide information about these changes to the API clients
-- <img src="https://img.shields.io/docker/cloud/build/paperwork/web.svg?style=flat-square"/> [`web`](https://github.com/paperwork/web): Angular 7-based web front-end for Paperwork
+- <img src="https://img.shields.io/docker/cloud/build/paperwork/web.svg?style=flat-square"/> [`web`](https://github.com/paperwork/web): Angular-based web front-end for Paperwork
 
 ### Paperwork Architecture
 
@@ -133,7 +133,7 @@ The API services provide the core logic that processes domain specific data and 
 
 While the API services are not exchangeable, infrastructure services usually are. For example Traefik could be replaced with NGINX, Minio with a real Amazon S3 storage and even gatekeeper could more or less easily be replaced with Kong or a similar API gateway in future. API services on the other hand are tightly integrated with the business logic and their own databases. Also, because they exchange information with each other through internal endpoints, they depend on each other and (partially) on their peer's data structures. For example the notes service performs an internal request towards the users service when a note is being requested, in order to include user information (first name, last name, etc) for every `access` definition within that note. This aggregation of data is not necessary form a back-end point of view and is only done in order to make things more comfortable for the UI layer. While, from a separation-of-concerns-perspective this might not be an ideal setup, it reduces complexity for now and allows the project to iterate quite quickly.
 
-On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular 7 that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
+On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
 
 ### Local development environment
 
