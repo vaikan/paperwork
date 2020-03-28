@@ -153,7 +153,6 @@ services:
         - "traefik.docker.network=paperwork_papernet"
         - "traefik.backend=service_gatekeeper"
         - "traefik.backend.loadbalancer.swarm=true"
-        - "traefik.frontend.entryPoints=http"
         - "traefik.frontend.passHostHeader=true"
         - "traefik.frontend.rule=Host:${PAPERWORK_API_HOSTNAME:-api}.${PAPERWORK_DOMAIN:-paperwork.local};PathPrefix:/"
 
@@ -306,6 +305,5 @@ services:
         - "traefik.docker.network=paperwork_papernet"
         - "traefik.backend=web"
         - "traefik.backend.loadbalancer.swarm=true"
-        - "traefik.frontend.entryPoints=http"
         - "traefik.frontend.passHostHeader=true"
         - "traefik.frontend.rule=Host:${PAPERWORK_WEB_HOSTNAME:-www}.${PAPERWORK_DOMAIN:-paperwork.local};PathPrefix:/"
