@@ -2,33 +2,25 @@ Paperwork
 =========
 [<img src="https://img.shields.io/matrix/paperwork:matrix.org.svg?color=%2361BCEE&label=JOIN%20THE%20CHAT&server_fqdn=matrix.org&style=for-the-badge"/>](https://riot.im/app/#/room/#paperwork:matrix.org)
 
-Paperwork is an open-source, self-hosted alternative to services like Evernote ®, Microsoft OneNote ® or Google Keep ®
+Paperwork is an open-source, self-hosted alternative to services like Evernote®, Microsoft OneNote® or Google Keep®
 
-## Version 2
+![Paperwork](https://github.com/paperwork/web/raw/master/docs/current-state-05.png)
 
-This branch contains the second iteration of Paperwork, which is a complete rewrite. Not only is it based on another framework - it is based on a completely different technology stack. **It is in its very early development phase and not yet usable**.
+## Mission
 
-*If you were looking for the Laravel-based version 1 of Paperwork, please check [out this branch](https://github.com/paperwork/paperwork/tree/1). **Version 1 is not in active development anymore!***
-
-### I would love to help building v2!
-
-Feel free to check out this branch and get involved with what's there already to get an idea of where Paperwork is heading. Also check out the [current issues](https://github.com/paperwork/paperwork/issues) to see what needs to be done or suggest what could be done in future iterations.
-
-Also, you can join the [official chatroom](https://riot.im/app/#/room/#paperwork:matrix.org) and participate there.
-
-**Info: 99% of the action happens [inside the other repositories](https://github.com/paperwork)! This repository only contains of the one-click-deployment of Paperwork!**
-
-## Spoiler
-
-In order to get Paperwork in its current state (*under development*) running, you have to have an understanding for how Docker and DNS works and know the basic concepts of HTTP proxying. Also, experience with Traefik and Minio might come in handy. 
-
-If you don't have that, then the current state of Paperwork probably isn't for you in first place. To make it clear: **This software is not *usable* at this moment. It's being worked on to be *made usable* in the near future. In its current state, Paperwork v2 is targeted to developers that would like to get their hands dirty and contribute to the project.**
+Paperwork aims to provide everybody with an easy to use, self-hosted alternative to services like Evernote®, Microsoft OneNote® or Google Keep® while focusing heavily on privacy and decentralisation.
 
 ## Demo
 
 A demo of the current Paperwork status is available at [https://www.demo.paperwork.cloud](https://www.demo.paperwork.cloud) (sorry, no HTTPs yet!). This instance won't persist data on the server side, but it does cache it inside your browser session. The instance is being destroyed every night at 1am UTC. Therefor all accounts are only valid for maximum one day. **Please do not use this instance to store actual data/sensitive information!**
 
 This demo instance is sponsored by [twostairs](https://twostairs.co).
+
+## Current State
+
+Paperwork currently is *under development*. In order to get Paperwork in its current state running, you have to have an understanding for how Docker and DNS works and know the basic concepts of HTTP proxying. Also, experience with Traefik and Minio might come in handy. 
+
+If you don't have that, then the current state of Paperwork probably isn't for you. To make it clear: **This software is not *usable* at this moment. It's being worked on to be *made usable* in the near future. In its current state, Paperwork v2 is targeted to developers that would like to get their hands dirty and contribute to the project.**
 
 ## Paperwork Architecture
 
@@ -118,7 +110,11 @@ In order to use Paperwork, you will need to register a new account.
 
 ## Developing & Contributing
 
-Please refer to [the individual services' repositories](https://github.com/paperwork) in order to get more information on how to contribute.
+Feel free to check out this branch and get involved with what's there already to get an idea of where Paperwork is heading. Also check out the [current issues](https://github.com/paperwork/paperwork/issues) to see what needs to be done or suggest what could be done in future iterations.
+
+Also, you can join the [official chatroom](https://riot.im/app/#/room/#paperwork:matrix.org) and participate there.
+
+**Info: 99% of the action happens [inside the other repositories](https://github.com/paperwork)! This repository only contains of the one-click-deployment of Paperwork!**
 
 ### Repositories
 
@@ -192,6 +188,12 @@ The best way to help this project is by contributing to the code. However, if th
 - [Chat](https://riot.im/app/#/room/#paperwork:matrix.org)
 - [Tweet](https://twitter.com/paperworkcloud)
 - [Mail](mailto:highfive@paperwork.cloud)
+
+## Footnote
+
+This branch contains the second iteration of Paperwork, which is a complete rewrite. Not only is it based on another framework - it is based on a completely different technology stack. **It is in its very early development phase and not yet usable**.
+
+*If you were looking for the Laravel-based version 1 of Paperwork, please check [out this branch](https://github.com/paperwork/paperwork/tree/1). **Version 1 is not in active development anymore!***
 
 
 <script>
