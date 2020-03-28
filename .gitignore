@@ -6,3 +6,4 @@ volumes/minio/*
 !volumes/minio/.gitkeep
 volumes/rabbitmq/*
 !volumes/rabbitmq/.gitkeep
+env/*.env

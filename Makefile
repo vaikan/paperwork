@@ -26,7 +26,7 @@ help: ##@Miscellaneous Show this help
 
 deploy: ##@Deployment Deploy Paperwork
 	(docker service ls || docker swarm init) \
-	&& docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
+	&& env $(shell cat env/env.env | xargs) docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
 # 	docker stack ps --orchestrator=${ORCHESTRATOR} ${STACK_NAME} > /dev/null \
 # 	&& $(error Paperwork already deployed! Run `make undeploy` first.) \
 # 	|| docker stack deploy --orchestrator=${ORCHESTRATOR} --prune --compose-file ${COMPOSE_FILE} ${STACK_NAME}
