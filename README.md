@@ -26,7 +26,7 @@ If you don't have that, then the current state of Paperwork probably isn't for y
 
 ## Demo
 
-A demo of the current Paperwork status is available at [http://www.demo.paperwork.cloud](http://www.demo.paperwork.cloud) (sorry, no HTTPs yet!). This instance won't persist data on the server side, but it does cache it inside your browser session. The instance is being destroyed every night at 1am UTC. Therefor all accounts are only valid for maximum one day. **Please do not use this instance to store actual data/sensitive information!**
+A demo of the current Paperwork status is available at [https://www.demo.paperwork.cloud](https://www.demo.paperwork.cloud) (sorry, no HTTPs yet!). This instance won't persist data on the server side, but it does cache it inside your browser session. The instance is being destroyed every night at 1am UTC. Therefor all accounts are only valid for maximum one day. **Please do not use this instance to store actual data/sensitive information!**
 
 This demo instance is sponsored by [twostairs](https://twostairs.co).
 
