@@ -33,6 +33,8 @@ services:
 # ╚════════════════════════════════════════════════════════════════════════════╝
   traefik:
     image: traefik:alpine
+    env_file:
+      - env/traefik.env
     ports:
       - "80:80"
       - "443:443"
