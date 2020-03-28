@@ -78,6 +78,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 360s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ File storage                                                               ║
@@ -100,6 +102,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 360s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Message broker                                                             ║
@@ -121,6 +125,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 360s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Gatekeeper Service                                                         ║
@@ -172,6 +178,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Users Service                                                              ║
@@ -194,6 +202,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Notes Service                                                              ║
@@ -216,6 +226,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Storages Service                                                           ║
@@ -239,6 +251,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Journals Service                                                           ║
@@ -262,6 +276,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      labels:
+        - "traefik.enable=false"
 
 # ╔════════════════════════════════════════════════════════════════════════════╗
 # ║ Web UI                                                                     ║
