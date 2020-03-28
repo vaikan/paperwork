@@ -28,7 +28,7 @@ If you don't have that, then the current state of Paperwork probably isn't for y
 
 A demo of the current Paperwork status is available at [http://www.demo.paperwork.cloud](http://www.demo.paperwork.cloud) (sorry, no HTTPs yet!). This instance won't persist data on the server side, but it does cache it inside your browser session. The instance is being destroyed every night at 1am UTC. Therefor all accounts are only valid for maximum one day. **Please do not use this instance to store actual data/sensitive information!**
 
-This demo instance is sponsored by [twostairs](https://twostairs.com).
+This demo instance is sponsored by [twostairs](https://twostairs.co).
 
 ## Setup
 
@@ -46,6 +46,23 @@ In order to easily get Paperwork running as a Docker stack, utilising whichever 
 $ make help
 ```
 
+#### Configuration
+
+Before deploying the Docker stack, you need to configure the environment properly. You can use the existing `.env.example` files as a template for that:
+
+```bash
+$ cd env/
+$ ls -1 | while read ef; do echo $ef | sed 's/\.example$//g' | xargs -I{} cp {}.example {}; done
+```
+
+With these files, the Docker stack is configured to use [www.paperwork.local](http://www.paperwork.local) (for the [web UI](https://github.com/paperwork/web)) and [api.paperwork.local](http://api.paperwork.local) (for the API services) by default. Hence you will need to add these to the `127.0.0.1` entry in your `/etc/hosts` file:
+
+```
+127.0.0.1   localhost paperwork.local api.paperwork.local www.paperwork.local
+```
+
+If you'd want to use a different domain and different hostnames for web and API, make sure to change the values inside [env/env.env](env/env.env) and [env/web.env](env/web.env). For using this stack in a live deployment, **you might also want to change passwords, JWT secrets and Erlang cookies** across the `.env` files.
+
 #### Deploy
 
 Launching the Paperwork can be done by make`-ing the `deploy` target:
@@ -56,24 +73,6 @@ $ make deploy
 
 The Makefile then takes care of initialising Swarm, in case you haven't done that already, creating the encrypted network (`papernet`) and deploying the Paperwork stack on top of it.
 
-#### Configuration
-
-This Docker stack is configured to use `www.paperwork.local` (for the [web UI](https://github.com/paperwork/web)) and `api.paperwork.local` (for the API services) by default. Hence you will need to add these to the `127.0.0.1` entry in your `/etc/hosts` file:
-
-```
-127.0.0.1   localhost paperwork.local api.paperwork.local www.paperwork.local
-```
-
-If you'd want to use a different domain and different hostnames for web and API, make sure to export the following env variables:
-
-- `PAPERWORK_API_PROTOCOL` (`http` by default, `https` also possible)
-- `PAPERWORK_API_HOSTNAME` (`api` by default)
-- `PAPERWORK_WEB_HOSTNAME` (`www` by default)
-- `PAPERWORK_DOMAIN` (`paperwork.local` by default)
-
-In addition to these variables, you can also use the following ones to override a couple of other defaults:
-
-- `PAPERWORK_JWT_SECRET` (the JWT secret used by `service_gatekeeper` and `service_users`)
 
 #### Undeploy
 
