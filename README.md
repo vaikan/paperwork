@@ -30,6 +30,20 @@ A demo of the current Paperwork status is available at [https://www.demo.paperwo
 
 This demo instance is sponsored by [twostairs](https://twostairs.co).
 
+## Paperwork Architecture
+
+![Paperwork Architecture](Paperwork%20Architecture.png)
+
+### Description
+
+The Paperwork project consists of a handful of custom-built API services, which take care of everything related to their specific domain: Configurations, users, notes & attachments. Underneath those, there are various infrastructure services which are either implemented by the Paperwork project (`service-gatekeeper`) or simply awesome third-party open-source projects that's being made use of (e.g. [Minio](https://github.com/minio/minio) and [Traefik](https://github.com/containous/traefik)).
+
+The API services provide the core logic that processes domain specific data and persists it on the service's own database. Each API service has its own database that no other services accesses directly. Instead, services communicate with each other through internal HTTP endpoints. The gatekeeper service abstracts the authorisation layer from each individual service by checking and decoding the JWT bearer, so that every service that runs behind `service-gatekeeper` can be sure that access was validated and session information is forwarded and accessible via HTTP headers. JWT crafting is currently done in `service-users`. Hence, `service-gatekeeper` and `service-users` need to share the same JWT secret. Implementation in this area is kept simple for now but will change with the introduction of OAuth 2.
+
+While the API services are not exchangeable, infrastructure services usually are. For example Traefik could be replaced with NGINX, Minio with a real Amazon S3 storage and even gatekeeper could more or less easily be replaced with Kong or a similar API gateway in future. API services on the other hand are tightly integrated with the business logic and their own databases. Also, because they exchange information with each other through internal endpoints, they depend on each other and (partially) on their peer's data structures. For example the notes service performs an internal request towards the users service when a note is being requested, in order to include user information (first name, last name, etc) for every `access` definition within that note. This aggregation of data is not necessary form a back-end point of view and is only done in order to make things more comfortable for the UI layer. While, from a separation-of-concerns-perspective this might not be an ideal setup, it reduces complexity for now and allows the project to iterate quite quickly.
+
+On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
+
 ## Setup
 
 This repository is structuring and unifying all required components for Paperwork. It its purpose is to provide an **example of how you *could* host Paperwork yourself**. However, please keep in mind that the stack file used in this repository should **not be used for real-world, internet-facing deployments**, as it lacks the ability to manage credentials between services in a secure manner.
@@ -102,7 +116,7 @@ As soon as you've finished the setup, you should be able to access [your Paperwo
 
 In order to use Paperwork, you will need to register a new account.
 
-## Developing / Contributing
+## Developing & Contributing
 
 Please refer to [the individual services' repositories](https://github.com/paperwork) in order to get more information on how to contribute.
 
@@ -120,19 +134,6 @@ Here are the main repositories of Paperwork v2:
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/service-journals.svg?style=flat-square"/> [`service-journals`](https://github.com/paperwork/service-storages): Journals service built in Elixir, that stores events related to database changes inside journals in order to provide information about these changes to the API clients
 - <img src="https://img.shields.io/docker/cloud/build/paperwork/web.svg?style=flat-square"/> [`web`](https://github.com/paperwork/web): Angular-based web front-end for Paperwork
 
-### Paperwork Architecture
-
-![Paperwork Architecture](Paperwork%20Architecture.png)
-
-#### Description
-
-The Paperwork project consists of a handful of custom-built API services, which take care of everything related to their specific domain: Configurations, users, notes & attachments. Underneath those, there are various infrastructure services which are either implemented by the Paperwork project (`service-gatekeeper`) or simply awesome third-party open-source projects that's being made use of (e.g. [Minio](https://github.com/minio/minio) and [Traefik](https://github.com/containous/traefik)).
-
-The API services provide the core logic that processes domain specific data and persists it on the service's own database. Each API service has its own database that no other services accesses directly. Instead, services communicate with each other through internal HTTP endpoints. The gatekeeper service abstracts the authorisation layer from each individual service by checking and decoding the JWT bearer, so that every service that runs behind `service-gatekeeper` can be sure that access was validated and session information is forwarded and accessible via HTTP headers. JWT crafting is currently done in `service-users`. Hence, `service-gatekeeper` and `service-users` need to share the same JWT secret. Implementation in this area is kept simple for now but will change with the introduction of OAuth 2.
-
-While the API services are not exchangeable, infrastructure services usually are. For example Traefik could be replaced with NGINX, Minio with a real Amazon S3 storage and even gatekeeper could more or less easily be replaced with Kong or a similar API gateway in future. API services on the other hand are tightly integrated with the business logic and their own databases. Also, because they exchange information with each other through internal endpoints, they depend on each other and (partially) on their peer's data structures. For example the notes service performs an internal request towards the users service when a note is being requested, in order to include user information (first name, last name, etc) for every `access` definition within that note. This aggregation of data is not necessary form a back-end point of view and is only done in order to make things more comfortable for the UI layer. While, from a separation-of-concerns-perspective this might not be an ideal setup, it reduces complexity for now and allows the project to iterate quite quickly.
-
-On top of the infrastructure and API services there is the UI layer that was just mentioned, which currently consists of the *Paperwork Web UI*. The web UI is a PWA built on Angular that talks to the API services through the gatekeeper service. It's aimed to provide 100% offline use capabilities, so that it can be worked with in scenarios in which there's no connectivity to the API.
 
 ### Local development environment
 
